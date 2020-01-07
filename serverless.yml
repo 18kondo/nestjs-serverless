@@ -1,0 +1,19 @@
+service:
+  name: nestjs-serverless
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${opt:stage, 'dev'}
+  region: ${env:AWS_REGION}
+  environment:
+    STAGE: ${opt:stage, 'dev'}
+
+functions:
+  main:
+    handler: dist/handler.handler
+    events:
+      - http:
+          cors: true
+          method: any
+          path: '/{any+}'
